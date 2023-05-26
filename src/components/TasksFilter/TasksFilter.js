@@ -1,8 +1,8 @@
 import React from 'react'
-import './ItemStatusFilter.css'
+import './TasksFilter.css'
 
 
-const ItemStatusFilter = () => {
+const TasksFilter = () => {
     return (
     <div className="btn-group">
         <button className="btn btn-info btn-all" type="button">All</button>
@@ -12,4 +12,4 @@ const ItemStatusFilter = () => {
     )
 }
 
-export default ItemStatusFilter;
+export default TasksFilter;

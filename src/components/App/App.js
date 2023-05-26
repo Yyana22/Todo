@@ -1,21 +1,21 @@
 import './App.css'
 import AppHeader from '../AppHeader'
-import TodoList from '../TodoList'
-import SearchPanel from '../SearchPanel'
+import TaskList from '../TaskList'
 
 const App = () => {
 
     const todoData = [
-      {label: 'qw1', important: false, id: 1},
-      {label: 'qw12', important: true, id: 2},
-      {label: 'qw123', important: false, id: 3},
+      {label: 'Completed task', important: false, id: 1, class: 'completed'},
+      {label: 'Editing task', important: true, id: 2, class: 'editing'},
+      {label: 'Active task', important: false, id: 3, class: null},
     ]
   
     return (
-      <div className="main">
+      <div className="todoapp">
         <AppHeader />
-        <SearchPanel />
-        <TodoList arrData={todoData}/>
+        <section className="main">
+          <TaskList arrData={todoData}/>
+        </section>
       </div>
     )
   }

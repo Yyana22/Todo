@@ -1,15 +1,16 @@
 import React from 'react'
-import TodoListItem from '../TodoListItem'
-import './TodoList.css'
+import Task from '../Task'
+import './TaskList.css'
 const TodoList = ({arrData}) => {
 
   const elements = arrData.map((item) => {
     const {id, ...itemProps} = item
     return (
-    <li key={id} className="list-group-item">
-      <TodoListItem { ...itemProps}/>
-                      {/* label={item.label}
-                      important={item.important} ==> {...item} */}
+    // <li key={id} className="list-group-item">
+    //   <TodoListItem { ...itemProps}/>
+    // </li>
+    <li className={itemProps.class} key={id}>
+        <Task {...itemProps}/>
     </li>
     )
   })
