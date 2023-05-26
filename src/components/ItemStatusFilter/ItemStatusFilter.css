@@ -1,0 +1,19 @@
+.btn-group{
+    width: 180px;
+    display: flex;
+}
+
+.btn-group .btn{
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.btn-all{
+    padding: 10px 15px !important;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.btn-done{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
