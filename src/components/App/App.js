@@ -1,7 +1,7 @@
 import './App.css'
 import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
-
+import Footer from '../Footer'
 const App = () => {
 
     const todoData = [
@@ -16,6 +16,7 @@ const App = () => {
         <section className="main">
           <TaskList arrData={todoData}/>
         </section>
+        <Footer/>
       </div>
     )
   }
