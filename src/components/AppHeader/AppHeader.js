@@ -7,6 +7,8 @@ export default class AppHeader extends Component {
 		return (
 			<div className="app-header">
 				<h1>todos</h1>
+				<p>completed: {this.props.completed}</p>
+				<p>todo: {this.props.todo}</p>
 				<NewTaskForm />
 			</div>
 		)

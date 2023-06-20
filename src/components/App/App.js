@@ -9,23 +9,32 @@ export default class App extends Component {
 	maxId = 100;
 	state = {
 		todoData: [
-			{ label: 'Completed task', id: 1, class: null, completed: false },
-			{ label: 'Editing task', id: 2, class: 'editing', completed: false },
-			{ label: 'Active task', id: 3, class: null, completed: false },
+			this.createTodoItem('drink coffe'),
+			this.createTodoItem('work'),
+			this.createTodoItem('read'),
 		]
 	}
+	createTodoItem(label) {
+		return {
+			label: label,
+			id: this.maxId++,
+			class: null,
+			completed: false
+		}
+	}
 
+	onToggleProperty = (arr, id, property) => {
+		const idx = arr.findIndex((item) => item.id === id);
+		const newItem = { ...arr[idx], [property]: !arr[idx][property] };
+		return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+	}
 	onChangeCompleted = (id) => {
 		this.setState(({ todoData }) => {
-			const idx = todoData.findIndex((item) => item.id === id);
-			const newItem = { ...todoData[idx], completed: !todoData[idx].completed };
-			const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
 			return {
-				todoData: newArray,
+				todoData: this.onToggleProperty(todoData, id, 'completed'),
 			};
 		});
 	};
-
 	onDeleted = (id) => {
 		this.setState(({ todoData }) => {
 			const idx = todoData.findIndex((item) => item.id === id);
@@ -38,30 +47,23 @@ export default class App extends Component {
 	};
 	onAddItem = (text) => {
 		this.setState(({ todoData }) => {
-			const newItem = {
-				label: text,
-				id: this.maxId,
-				class: null,
-				completed: false
-			}
-			this.maxId++;
+			const newItem = this.createTodoItem(text)
 			return {
 				todoData: [...todoData, newItem],
 			};
 		});
 	}
 	render() {
+		const { todoData } = this.state
+		const countCompleted = todoData.filter((el) => el.completed).length
+		const countTodo = todoData.length - countCompleted;
 		return (
 			<div className="todoapp">
-				<AppHeader />
+				<AppHeader completed={countCompleted} todo={countTodo} />
 				<section className="main">
 					<TaskList arrData={this.state.todoData}
-						onChangeCompleted={(id) => {
-							this.onChangeCompleted(id)
-						}}
-						onDeleted={(id) => {
-							this.onDeleted(id)
-						}}
+						onChangeCompleted={this.onChangeCompleted}
+						onDeleted={this.onDeleted}
 					/>
 				</section>
 				<Footer />
