@@ -1,24 +1,53 @@
+import React, { Component } from 'react'
 import './App.css'
 import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
-const App = () => {
 
-    const todoData = [
-      {label: 'Completed task', important: false, id: 1, class: 'completed'},
-      {label: 'Editing task', important: true, id: 2, class: 'editing'},
-      {label: 'Active task', important: false, id: 3, class: null},
-    ]
-  
-    return (
-      <div className="todoapp">
-        <AppHeader />
-        <section className="main">
-          <TaskList arrData={todoData}/>
-        </section>
-        <Footer/>
-      </div>
-    )
-  }
+export default class App extends Component {
+	state = {
+		todoData: [
+			{ label: 'Completed task', id: 1, class: null, completed: false },
+			{ label: 'Editing task', id: 2, class: 'editing', completed: false },
+			{ label: 'Active task', id: 3, class: null, completed: false },
+		]
+	}
 
-export default App
+	onChangeCompleted = (id) => {
+		this.setState(({ todoData }) => {
+			const idx = todoData.findIndex((item) => item.id === id);
+			const newItem = { ...todoData[idx], completed: !todoData[idx].completed };
+			const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+			return {
+				todoData: newArray,
+			};
+		});
+	};
+
+	onDeleted = (id) => {
+		this.setState(({ todoData }) => {
+			const idx = todoData.findIndex((item) => item.id === id);
+			const newItem = { ...todoData[idx], completed: !todoData[idx].completed };
+			const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+			return {
+				todoData: newArray,
+			};
+		});
+	};
+
+	render() {
+
+		return (
+			<div className="todoapp">
+				<AppHeader />
+				<section className="main">
+					<TaskList arrData={this.state.todoData}
+						onChangeCompleted={(id) => {
+							this.onChangeCompleted(id)
+						}} />
+				</section>
+				<Footer />
+			</div>
+		)
+	}
+}
