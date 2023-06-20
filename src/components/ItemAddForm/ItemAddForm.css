@@ -1,0 +1,13 @@
+.wrap-add-btn {
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.add-btn {
+	width: 80px;
+	background-color: rgb(18, 18, 116);
+}
+
+.add-btn:hover{
+	background-color: rgb(33, 33, 182);
+}

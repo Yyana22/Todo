@@ -3,8 +3,10 @@ import './App.css'
 import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
+import ItemAddForm from '../ItemAddForm'
 
 export default class App extends Component {
+	maxId = 100;
 	state = {
 		todoData: [
 			{ label: 'Completed task', id: 1, class: null, completed: false },
@@ -34,9 +36,21 @@ export default class App extends Component {
 			};
 		});
 	};
-
+	onAddItem = (text) => {
+		this.setState(({ todoData }) => {
+			const newItem = {
+				label: text,
+				id: this.maxId,
+				class: null,
+				completed: false
+			}
+			this.maxId++;
+			return {
+				todoData: [...todoData, newItem],
+			};
+		});
+	}
 	render() {
-
 		return (
 			<div className="todoapp">
 				<AppHeader />
@@ -51,6 +65,10 @@ export default class App extends Component {
 					/>
 				</section>
 				<Footer />
+				<ItemAddForm
+					onAddItem={() => {
+						this.onAddItem('text')
+					}} />
 			</div>
 		)
 	}
