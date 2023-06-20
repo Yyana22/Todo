@@ -4,7 +4,6 @@ import './Task.css'
 export default class Task extends Component {
 	render() {
 		const itemProps = this.props;
-		console.log(itemProps)
 		return (
 			<div className='view'>
 				<input className="toggle" type="checkbox" onClick={itemProps.onChangeCompleted}></input>
@@ -13,7 +12,7 @@ export default class Task extends Component {
 					<span className="created">created 17 seconds ago</span>
 				</label>
 				<button className="icon icon-edit"></button>
-				<button className="icon icon-destroy"></button>
+				<button className="icon icon-destroy" onClick={itemProps.onDeleted}></button>
 			</div>
 		)
 	}

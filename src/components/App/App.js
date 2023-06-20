@@ -27,10 +27,10 @@ export default class App extends Component {
 	onDeleted = (id) => {
 		this.setState(({ todoData }) => {
 			const idx = todoData.findIndex((item) => item.id === id);
-			const newItem = { ...todoData[idx], completed: !todoData[idx].completed };
-			const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+			const before = todoData.slice(0, idx)
+			const after = todoData.slice(idx + 1)
 			return {
-				todoData: newArray,
+				todoData: [...before, ...after],
 			};
 		});
 	};
@@ -44,7 +44,11 @@ export default class App extends Component {
 					<TaskList arrData={this.state.todoData}
 						onChangeCompleted={(id) => {
 							this.onChangeCompleted(id)
-						}} />
+						}}
+						onDeleted={(id) => {
+							this.onDeleted(id)
+						}}
+					/>
 				</section>
 				<Footer />
 			</div>

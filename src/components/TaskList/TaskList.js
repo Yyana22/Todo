@@ -10,7 +10,6 @@ export default class TaskList extends Component {
 			if (itemProps.completed) {
 				classNames += "completed"
 			}
-			console.log(this.props)
 			if (itemProps.class === 'editing') {
 				return (
 					<li className={itemProps.class} key={id}>
@@ -21,8 +20,14 @@ export default class TaskList extends Component {
 			}
 			return (
 				<li className={itemProps.class + ` ${classNames}`} key={id}>
-					<Task {...itemProps} onChangeCompleted={() => { this.props.onChangeCompleted(id) }} id={id} />
-					{/* <Task {...itemProps} /> */}
+					<Task
+						{...itemProps}
+						onChangeCompleted={() => { this.props.onChangeCompleted(id) }}
+						id={id}
+						onDeleted={() => {
+							this.props.onDeleted(id)
+						}}
+					/>
 				</li>
 			)
 		})
