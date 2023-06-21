@@ -3,18 +3,17 @@ import './App.css'
 import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
-import ItemAddForm from '../ItemAddForm'
+// import ItemAddForm from '../ItemAddForm'
 
 export default class App extends Component {
 	maxId = 100;
-	filter = 'All'
 	state = {
 		todoData: [
 			this.createTodoItem('drink coffe'),
 			this.createTodoItem('work'),
 			this.createTodoItem('read'),
 		],
-		// filter: 'All'
+		filter: 'All'
 	}
 	createTodoItem(label) {
 		return {
@@ -57,30 +56,13 @@ export default class App extends Component {
 	}
 
 	filterChange = (e) => {
-		console.log(e.target.innerText)
-		let type = e.target.innerText
-		this.setState(({ todoData }) => {
-			this.filter = type
-			if (type === 'All') {
-				return {
-					todoData: todoData,
-				}
-			} else if (type === 'Active') {
-				const newArr = todoData.filter((el) => !el.completed)
-				console.log(newArr)
-				return {
-					todoData: newArr,
-				}
-			} else if (type === 'Completed') {
-				const newArr = todoData.filter((el) => el.completed)
-				console.log(newArr)
-				return {
-					todoData: newArr,
-				}
+		this.setState(() => {
+			let newFilter = e.target.innerText
+			return {
+				filter: newFilter
 			}
-		});
+		})
 	}
-
 	clearCompleted = () => {
 		this.setState(({ todoData }) => {
 			const newArr = todoData.filter((el) => !el.completed)
@@ -93,27 +75,38 @@ export default class App extends Component {
 		const { todoData } = this.state
 		const countCompleted = todoData.filter((el) => el.completed).length
 		const countTodo = todoData.length - countCompleted;
+		console.log(this.state.filter)
+		let newArr = []
+		switch (this.state.filter) {
+			case 'All':
+				newArr = todoData;
+				break
+			case 'Active':
+				newArr = todoData.filter((el) => !el.completed);
+				break
+			case 'Completed':
+				newArr = todoData.filter((el) => el.completed);
+				break
+			default:
+				console.log('hi')
+				break
+		}
 		return (
-			<div className="todoapp">
+			<div className="todoapp" >
 				<AppHeader completed={countCompleted} todo={countTodo} onAddItem={this.onAddItem} />
 				<section className="main">
-					<TaskList arrData={this.state.todoData}
+					<TaskList
+						arrData={newArr}
 						onChangeCompleted={this.onChangeCompleted}
 						onDeleted={this.onDeleted}
 					/>
 				</section>
 				<Footer todo={countTodo}
-					filterChange={(type) => {
-						this.filterChange(type)
-					}}
+					filterChange={this.filterChange}
 					clearCompleted={() => {
 						this.clearCompleted()
 					}}
 				/>
-				<ItemAddForm
-					onAddItem={() => {
-						this.onAddItem('text')
-					}} />
 			</div>
 		)
 	}
