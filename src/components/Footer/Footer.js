@@ -8,16 +8,16 @@ export default class Footer extends Component {
 				<span className="todo-count">{this.props.todo} items left</span>
 				<ul className="filters">
 					<li>
-						<button className="selected">All</button>
+						<button onClick={this.props.filterChange} className="selected">All</button>
 					</li>
 					<li>
-						<button>Active</button>
+						<button onClick={this.props.filterChange}>Active</button>
 					</li>
 					<li>
-						<button>Completed</button>
+						<button onClick={this.props.filterChange}>Completed</button>
 					</li>
 				</ul>
-				<button className="clear-completed">Clear completed</button>
+				<button onClick={this.props.clearCompleted} className="clear-completed">Clear completed</button>
 			</footer>
 		)
 	}

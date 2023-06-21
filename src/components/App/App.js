@@ -7,12 +7,14 @@ import ItemAddForm from '../ItemAddForm'
 
 export default class App extends Component {
 	maxId = 100;
+	filter = 'All'
 	state = {
 		todoData: [
 			this.createTodoItem('drink coffe'),
 			this.createTodoItem('work'),
 			this.createTodoItem('read'),
-		]
+		],
+		// filter: 'All'
 	}
 	createTodoItem(label) {
 		return {
@@ -53,6 +55,40 @@ export default class App extends Component {
 			};
 		});
 	}
+
+	filterChange = (e) => {
+		console.log(e.target.innerText)
+		let type = e.target.innerText
+		this.setState(({ todoData }) => {
+			this.filter = type
+			if (type === 'All') {
+				return {
+					todoData: todoData,
+				}
+			} else if (type === 'Active') {
+				const newArr = todoData.filter((el) => !el.completed)
+				console.log(newArr)
+				return {
+					todoData: newArr,
+				}
+			} else if (type === 'Completed') {
+				const newArr = todoData.filter((el) => el.completed)
+				console.log(newArr)
+				return {
+					todoData: newArr,
+				}
+			}
+		});
+	}
+
+	clearCompleted = () => {
+		this.setState(({ todoData }) => {
+			const newArr = todoData.filter((el) => !el.completed)
+			return {
+				todoData: newArr
+			};
+		});
+	}
 	render() {
 		const { todoData } = this.state
 		const countCompleted = todoData.filter((el) => el.completed).length
@@ -66,7 +102,14 @@ export default class App extends Component {
 						onDeleted={this.onDeleted}
 					/>
 				</section>
-				<Footer todo={countTodo} />
+				<Footer todo={countTodo}
+					filterChange={(type) => {
+						this.filterChange(type)
+					}}
+					clearCompleted={() => {
+						this.clearCompleted()
+					}}
+				/>
 				<ItemAddForm
 					onAddItem={() => {
 						this.onAddItem('text')
