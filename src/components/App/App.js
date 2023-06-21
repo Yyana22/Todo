@@ -59,14 +59,14 @@ export default class App extends Component {
 		const countTodo = todoData.length - countCompleted;
 		return (
 			<div className="todoapp">
-				<AppHeader completed={countCompleted} todo={countTodo} />
+				<AppHeader completed={countCompleted} todo={countTodo} onAddItem={this.onAddItem} />
 				<section className="main">
 					<TaskList arrData={this.state.todoData}
 						onChangeCompleted={this.onChangeCompleted}
 						onDeleted={this.onDeleted}
 					/>
 				</section>
-				<Footer />
+				<Footer todo={countTodo} />
 				<ItemAddForm
 					onAddItem={() => {
 						this.onAddItem('text')
