@@ -3,9 +3,25 @@ import './App.css'
 import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
-// import ItemAddForm from '../ItemAddForm'
-
+import PropTypes from 'prop-types'
 export default class App extends Component {
+	static defaultProps = { //если нужны значения по умолчанию, но они не всегда передаются
+		myName: 'Yana'
+	}
+
+	// static propTypes = { //установка типа пропса(чтобы избежать ошибок, если в пропсах придет не нужный тип)
+	// 	myName: (props, propName, componentName) => { //без библиотеки prop-types
+	// 		const value = props[propName];
+	// 		if (typeof value == 'string') {
+	// 			return null
+	// 		}
+	// 		return new TypeError(`${componentName}: ${propName} must be type 'string'`)
+	// 	}
+	// }
+
+	static propTypes = {
+		myName: PropTypes.string //.isRequired
+	}
 	maxId = 100;
 	state = {
 		todoData: [
