@@ -4,6 +4,8 @@ import AppHeader from '../AppHeader'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
 import PropTypes from 'prop-types'
+import { format } from 'date-fns'
+// format(new Date(2014, 1, 11), 'MM/dd/yyyy')
 export default class App extends Component {
 	static defaultProps = { //если нужны значения по умолчанию, но они не всегда передаются
 		myName: 'Yana'
@@ -36,10 +38,26 @@ export default class App extends Component {
 			label: label,
 			id: this.maxId++,
 			class: null,
-			completed: false
+			completed: false,
+			date: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 		}
 	}
-
+	remakeTime = (date) => {
+		let firstArr = date.split(' ')
+		let secondArr = firstArr[0].split('-')
+		let therdArr = firstArr[1].split(':')
+		let countSY = 31536000 * secondArr[0]
+		let countSM = 2419200 * secondArr[1]
+		let countSD = 86400 * secondArr[2]
+		let countSH = 3600 * therdArr[0]
+		let countSMin = 60 * therdArr[1]
+		let countSS = therdArr[2]
+		let count = countSY + countSM + countSD + countSH + countSMin + countSS
+		return count
+	}
+	fixTime = (date) => {
+		return this.remakeTime(format(new Date(), 'yyyy-MM-dd HH:mm:ss')) - this.remakeTime(date)
+	}
 	onToggleProperty = (arr, id, property) => {
 		const idx = arr.findIndex((item) => item.id === id);
 		const newItem = { ...arr[idx], [property]: !arr[idx][property] };
@@ -91,7 +109,6 @@ export default class App extends Component {
 		const { todoData } = this.state
 		const countCompleted = todoData.filter((el) => el.completed).length
 		const countTodo = todoData.length - countCompleted;
-		console.log(this.state.filter)
 		let newArr = []
 		switch (this.state.filter) {
 			case 'All':
@@ -115,6 +132,7 @@ export default class App extends Component {
 						arrData={newArr}
 						onChangeCompleted={this.onChangeCompleted}
 						onDeleted={this.onDeleted}
+						fixTime={this.fixTime}
 					/>
 				</section>
 				<Footer todo={countTodo}

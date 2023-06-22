@@ -27,6 +27,7 @@ export default class TaskList extends Component {
 						onDeleted={() => {
 							this.props.onDeleted(id)
 						}}
+						fixTime={this.props.fixTime}
 					/>
 				</li>
 			)
