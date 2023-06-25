@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import './Task.css'
-
+import { formatDistanceToNow } from 'date-fns'
 export default class Task extends Component {
+
+	state = {
+		created: formatDistanceToNow(this.props.date, { includeSeconds: true })
+	}
+
+	componentDidMount() {
+		this.timerID = setInterval(
+			() => this.setState({ created: formatDistanceToNow(this.props.date, { includeSeconds: true }) }),
+			1000
+		);
+	}
 	render() {
 		const itemProps = this.props;
 		return (
@@ -9,7 +20,8 @@ export default class Task extends Component {
 				<input className="toggle" type="checkbox" onClick={itemProps.onChangeCompleted}></input>
 				<label>
 					<span className="description">{itemProps.label}</span>
-					<span className="created">created {itemProps.fixTime(itemProps.date)} seconds ago</span>
+					<span className="created">created {this.state.created} ago</span>
+					{/* <span className="created">created {itemProps.fixTime(itemProps.date)} seconds ago</span> */}
 				</label>
 				<button className="icon icon-edit"></button>
 				<button className="icon icon-destroy" onClick={itemProps.onDeleted}></button>

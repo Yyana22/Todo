@@ -1,8 +1,25 @@
 import React, { Component } from 'react'
 import Task from '../Task'
 import './TaskList.css'
-
+import PropTypes from 'prop-types'
 export default class TaskList extends Component {
+
+	static defaultProps = {
+		arrData: [],
+		onChangeCompleted: () => {
+			console.log('default onChangeCompleted in Footer')
+		},
+		onDeleted: () => {
+			console.log('default onDeleted	 in Footer')
+		}
+	}
+
+	static propTypes = {
+		arrData: PropTypes.arrayOf(PropTypes.object),
+		onChangeCompleted: PropTypes.func,
+		onDeleted: PropTypes.func
+	}
+
 	render() {
 		const elements = this.props.arrData.map((item) => {
 			const { id, ...itemProps } = item
@@ -27,7 +44,6 @@ export default class TaskList extends Component {
 						onDeleted={() => {
 							this.props.onDeleted(id)
 						}}
-						fixTime={this.props.fixTime}
 					/>
 				</li>
 			)
