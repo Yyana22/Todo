@@ -13,7 +13,7 @@ export default class Task extends Component {
     );
   }
   render() {
-    var itemProps = this.props;
+    const itemProps = this.props;
     return (
       <div className="view">
         <input className="toggle" type="checkbox" onClick={itemProps.onChangeCompleted}></input>
