@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
+import './Task.css';
 export default class Task extends Component {
   state = {
     created: formatDistanceToNow(this.props.date, { includeSeconds: true }),
@@ -13,7 +13,7 @@ export default class Task extends Component {
     );
   }
   render() {
-    const itemProps = this.props;
+    var itemProps = this.props;
     return (
       <div className="view">
         <input className="toggle" type="checkbox" onClick={itemProps.onChangeCompleted}></input>
