@@ -47,6 +47,9 @@ export default class TaskList extends Component {
             onDeleted={() => {
               this.props.onDeleted(id);
             }}
+            onToggleEdit={(text) => {
+              this.props.onToggleEdit(text, id);
+            }}
           />
         </li>
       );

@@ -50,6 +50,16 @@ export default class App extends Component {
       };
     });
   };
+  onToggleEdit = (text, id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((item) => item.id === id);
+      const newItem = { ...todoData[idx], label: text };
+      const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+      return {
+        todoData: newArray,
+      };
+    });
+  };
   onAddItem = (text) => {
     this.setState(({ todoData }) => {
       const newItem = this.createTodoItem(text);
@@ -98,7 +108,12 @@ export default class App extends Component {
       <div className="todoapp">
         <AppHeader onAddItem={this.onAddItem} />
         <section className="main">
-          <TaskList arrData={newArr} onChangeCompleted={this.onChangeCompleted} onDeleted={this.onDeleted} />
+          <TaskList
+            arrData={newArr}
+            onChangeCompleted={this.onChangeCompleted}
+            onDeleted={this.onDeleted}
+            onToggleEdit={this.onToggleEdit}
+          />
         </section>
         <Footer
           todo={countTodo}

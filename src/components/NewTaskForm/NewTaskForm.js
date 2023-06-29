@@ -27,6 +27,7 @@ export default class NewTaskForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
+          required
           className="new-todo"
           placeholder="What needs to be done?"
           onChange={this.onChange}
