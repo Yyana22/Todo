@@ -17,8 +17,7 @@ export default class Task extends Component {
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
-  onEditing = (e) => {
-    console.log(e.target);
+  onEditing = () => {
     this.setState({
       class: '',
     });

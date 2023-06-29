@@ -71,7 +71,8 @@ export default class App extends Component {
 
   filterChange = (e) => {
     this.setState(() => {
-      let newFilter = e.target.innerText;
+      console.log(e.target.id);
+      let newFilter = e.target.id;
       return {
         filter: newFilter,
       };

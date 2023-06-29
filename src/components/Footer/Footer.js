@@ -24,17 +24,40 @@ export default class Footer extends Component {
         <span className="todo-count">{this.props.todo} items left</span>
         <ul className="filters">
           <li>
-            <button onClick={this.props.filterChange} className="selected">
+            <label htmlFor="All">
+              <input
+                type="radio"
+                id="All"
+                checked={this.props.activeFilter === 'All'}
+                onChange={this.props.filterChange}
+              />
               All
-            </button>
+            </label>
           </li>
           <li>
-            <button onClick={this.props.filterChange}>Active</button>
+            <label htmlFor="Active">
+              <input
+                type="radio"
+                id="Active"
+                checked={this.props.activeFilter === 'Active'}
+                onChange={this.props.filterChange}
+              />
+              Active
+            </label>
           </li>
           <li>
-            <button onClick={this.props.filterChange}>Completed</button>
+            <label htmlFor="Completed">
+              <input
+                type="radio"
+                id="Completed"
+                checked={this.props.activeFilter === 'Completed'}
+                onChange={this.props.filterChange}
+              />
+              Completed
+            </label>
           </li>
         </ul>
+
         <button onClick={this.props.clearCompleted} className="clear-completed">
           Clear completed
         </button>
