@@ -71,7 +71,6 @@ export default class App extends Component {
 
   filterChange = (e) => {
     this.setState(() => {
-      console.log(e.target.id);
       let newFilter = e.target.id;
       return {
         filter: newFilter,
@@ -122,6 +121,7 @@ export default class App extends Component {
           clearCompleted={() => {
             this.clearCompleted();
           }}
+          activeFilter={this.state.filter}
         />
       </div>
     );

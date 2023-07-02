@@ -17,13 +17,12 @@ export default class Footer extends Component {
     filterChange: PropTypes.func,
     clearCompleted: PropTypes.func,
   };
-
   render() {
     return (
       <footer className="footer">
         <span className="todo-count">{this.props.todo} items left</span>
         <ul className="filters">
-          <li>
+          <li className={this.props.activeFilter === 'All' ? 'selected' : ''}>
             <label htmlFor="All">
               <input
                 type="radio"
@@ -34,7 +33,7 @@ export default class Footer extends Component {
               All
             </label>
           </li>
-          <li>
+          <li className={this.props.activeFilter === 'Active' ? 'selected' : ''}>
             <label htmlFor="Active">
               <input
                 type="radio"
@@ -45,7 +44,7 @@ export default class Footer extends Component {
               Active
             </label>
           </li>
-          <li>
+          <li className={this.props.activeFilter === 'Completed' ? 'selected' : ''}>
             <label htmlFor="Completed">
               <input
                 type="radio"
