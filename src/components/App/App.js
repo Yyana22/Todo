@@ -13,19 +13,21 @@ export default class App extends Component {
   static propTypes = {
     myName: PropTypes.string, //.isRequired
   };
-
   maxId = 100;
   state = {
-    todoData: [this.createTodoItem('drink coffe'), this.createTodoItem('work'), this.createTodoItem('read')],
+    todoData: [],
     filter: 'All',
   };
-  createTodoItem(label) {
+  createTodoItem(label, min, sec) {
+    console.log(min, sec);
     return {
       label: label,
       id: this.maxId++,
       class: null,
       completed: false,
       date: new Date(),
+      minutes: Number(min),
+      seconds: Number(sec),
     };
   }
   onToggleProperty = (arr, id, property) => {
@@ -60,15 +62,15 @@ export default class App extends Component {
       };
     });
   };
-  onAddItem = (text) => {
+  onAddItem = (text, minutes, seconds) => {
     this.setState(({ todoData }) => {
-      const newItem = this.createTodoItem(text);
+      const newItem = this.createTodoItem(text, minutes, seconds);
       return {
         todoData: [...todoData, newItem],
       };
     });
   };
-
+  щ;
   filterChange = (e) => {
     this.setState(() => {
       let newFilter = e.target.id;
