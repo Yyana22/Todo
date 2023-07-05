@@ -62,15 +62,6 @@
 	height: 10px;
 }
 
-.todo-list li .icon-play {
-	top: 0;
-	left: 40%;
-	font-size: 10px;
-	position: absolute;
-	width: 5px;
-	height: 5px;
-}
-
 .icon.icon-pause,
 .icon.icon-play {
   font-size: 15px !important;
@@ -78,18 +69,28 @@
 
  
  .icon-pause:after {
+	top: 50%;
+	right: 30px;
 	content: '⏸';
+	position: absolute;
  }
  
  .icon-play:after {
+	top: 50%;
+	right: 30px;
 	content: '▶';
+	position: absolute;
  }
 
 .timer-wrap{
+	position: relative;
    display: block;
 	justify-content: space-between;
 }
 
 .timer{
-	display: block;
+	padding: 5px;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
 }
