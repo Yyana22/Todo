@@ -71,28 +71,25 @@
 	height: 5px;
 }
 
-.todo-list li .icon-pause {
-	top: 0;
-	left: 40%;
-	position: absolute;
+.icon.icon-pause,
+.icon.icon-play {
+  font-size: 15px !important;
 }
 
-.icon-pause:after {
-	font-size: 0.6em;
+ 
+ .icon-pause:after {
 	content: '⏸';
-	margin-left: 30px;
-}
-
-.icon-play:after {
-	font-size: 0.6em;
-	width: 10px;
-	height: 10px;
+ }
+ 
+ .icon-play:after {
 	content: '▶';
-}
+ }
 
 .timer-wrap{
-	top: 0;
-	left: 40%;
-	position: absolute;
-	display: flex;
+   display: block;
+	justify-content: space-between;
+}
+
+.timer{
+	display: block;
 }

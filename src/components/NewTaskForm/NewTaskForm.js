@@ -32,7 +32,6 @@ export default class NewTaskForm extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
     this.props.onAddItem(this.state.label, this.state.minutes, this.state.seconds);
     this.setState({
       label: '',

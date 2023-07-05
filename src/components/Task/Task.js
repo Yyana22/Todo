@@ -7,16 +7,19 @@ export default class Task extends Component {
     created: formatDistanceToNow(this.props.date, { includeSeconds: true }),
     value: '',
     class: 'formDisable',
+    minutes: this.props.minutes,
+    seconds: this.props.seconds,
+    isRunning: false,
   };
 
   componentDidMount() {
-    this.timerID = setInterval(
+    this.secundomer = setInterval(
       () => this.setState({ created: formatDistanceToNow(this.props.date, { includeSeconds: true }) }),
       1000
     );
   }
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.secundomer);
   }
   onEditing = () => {
     this.setState({
@@ -37,6 +40,20 @@ export default class Task extends Component {
       class: 'formDisable',
     });
   };
+  startCounting = () => {
+    console.log('start');
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.props.refreshTimer();
+    }, 1000);
+    this.setState({ isRunning: true });
+  };
+
+  stopCounting = () => {
+    console.log('stop');
+    clearInterval(this.interval);
+    this.setState({ isRunning: false });
+  };
   render() {
     const itemProps = this.props;
     return (
@@ -44,13 +61,16 @@ export default class Task extends Component {
         <input className="toggle" type="checkbox" onClick={itemProps.onChangeCompleted}></input>
         <label>
           <span className="description">{itemProps.label}</span>
-          <div className="timer-wrap">
-            <button className="icon icon-play"></button>
-            <button className="icon icon-pause"></button>
-            <div className="timer">
-              {itemProps.minutes} {itemProps.seconds}
-            </div>
-          </div>
+          <span className="timer-wrap">
+            {this.state.isRunning ? (
+              <button className="icon icon-pause" onClick={this.stopCounting} disabled={!this.state.isRunning}></button>
+            ) : (
+              <button className="icon icon-play" onClick={this.startCounting} disabled={this.state.isRunning}></button>
+            )}
+            <span className="timer">
+              {this.props.minutes} : {this.props.seconds}
+            </span>
+          </span>
           <span className="created">created {this.state.created} ago</span>
         </label>
         <div>

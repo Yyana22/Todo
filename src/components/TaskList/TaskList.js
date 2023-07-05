@@ -26,19 +26,15 @@ export default class TaskList extends Component {
       const { id, ...itemProps } = item;
       let classNames = '';
       if (itemProps.completed) {
-        classNames += 'completed';
-      }
-      if (itemProps.class === 'editing') {
-        return (
-          <li className={itemProps.class} key={id}>
-            <Task {...itemProps} />
-            <input type="text" className="edit" defaultValue="Editing task" />
-          </li>
-        );
+        classNames = 'completed';
       }
       return (
-        <li className={itemProps.class + ` ${classNames}`} key={id}>
+        <li className={`${classNames}`} key={id}>
           <Task
+            classLi={classNames}
+            refreshTimer={() => this.props.onSecondsToComplete(id)}
+            startCounting={() => this.props.onStartCounting(id)}
+            stopCounting={() => this.props.onStopCounting()}
             {...itemProps}
             onChangeCompleted={() => {
               this.props.onChangeCompleted(id);

@@ -13,13 +13,18 @@ export default class App extends Component {
   static propTypes = {
     myName: PropTypes.string, //.isRequired
   };
+  interval;
   maxId = 100;
   state = {
     todoData: [],
     filter: 'All',
   };
   createTodoItem(label, min, sec) {
-    console.log(min, sec);
+    if (min < 10) {
+      min = `${0}${min}`;
+    } else if (sec < 10) {
+      sec = '0' + sec;
+    }
     return {
       label: label,
       id: this.maxId++,
@@ -70,7 +75,6 @@ export default class App extends Component {
       };
     });
   };
-  щ;
   filterChange = (e) => {
     this.setState(() => {
       let newFilter = e.target.id;
@@ -86,6 +90,46 @@ export default class App extends Component {
         todoData: newArr,
       };
     });
+  };
+
+  onTimeLeft = (id) => {
+    try {
+      this.setState(({ todoData }) => {
+        const idx = this.state.todoData.findIndex((item) => item.id === id);
+        const reachableItem = todoData[idx];
+        if (reachableItem.minutes !== 0 && reachableItem.seconds === 0) {
+          const newItem = { ...reachableItem, minutes: reachableItem.minutes - 1, seconds: 59 };
+          const newArr = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+          return {
+            todoData: newArr,
+          };
+        } else if (reachableItem.minutes === 0 && reachableItem.seconds === 0) {
+          const newItem = { ...reachableItem, minutes: 0, seconds: 0 };
+          const newArr = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+          return {
+            todoData: newArr,
+          };
+        } else {
+          const newItem = { ...reachableItem, seconds: reachableItem.seconds - 1 };
+          const newArr = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+          return {
+            todoData: newArr,
+          };
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  startCounting = (id) => {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.onSecondsToComplete(id);
+    }, 1000);
+  };
+
+  stopCounting = () => {
+    clearInterval(this.interval);
   };
   render() {
     const { todoData } = this.state;
@@ -111,10 +155,13 @@ export default class App extends Component {
         <AppHeader onAddItem={this.onAddItem} />
         <section className="main">
           <TaskList
+            onSecondsToComplete={this.onTimeLeft}
             arrData={newArr}
             onChangeCompleted={this.onChangeCompleted}
             onDeleted={this.onDeleted}
             onToggleEdit={this.onToggleEdit}
+            onStartCounting={this.startCounting}
+            onStopCounting={this.stopCounting}
           />
         </section>
         <Footer
